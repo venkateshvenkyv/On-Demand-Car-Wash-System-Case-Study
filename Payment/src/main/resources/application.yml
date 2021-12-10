@@ -1,0 +1,10 @@
+server:
+  port: 8004
+
+spring:
+  data:
+    mongodb:
+      uri:  mongodb+srv://venky:venky@cluster0.pcodt.mongodb.net/Payment?retryWrites=true&w=majority
+      
+  application:
+    name: PAYMENT-SERVICE
