@@ -4,6 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri:  mongodb+srv://venky:venky@cluster0.pcodt.mongodb.net/admins?retryWrites=true&w=majority
+      uri:  mongodb+srv://venky:venky@cluster0.pcodt.mongodb.net/Admin?retryWrites=true&w=majority
+      
   application:
     name: ADMIN-SERVICE

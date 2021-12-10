@@ -1,4 +1,4 @@
-package com.ondemandcarwash.controller;
+package com.casestudy.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.ondemandcarwash.exception.ApiRequestException;
-import com.ondemandcarwash.model.Order;
-import com.ondemandcarwash.repository.OrderRepository;
-import com.ondemandcarwash.service.OrderService;
+
+import com.casestudy.exception.ApiRequestException;
+import com.casestudy.model.Order;
+import com.casestudy.repository.OrderRepository;
+import com.casestudy.service.OrderService;
 
 @RestController
 @RequestMapping("/order")

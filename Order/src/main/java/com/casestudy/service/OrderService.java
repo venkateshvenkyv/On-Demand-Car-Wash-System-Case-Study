@@ -1,11 +1,12 @@
-package com.ondemandcarwash.service;
+package com.casestudy.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ondemandcarwash.model.Order;
-import com.ondemandcarwash.repository.OrderRepository;
+
+import com.casestudy.model.Order;
+import com.casestudy.repository.OrderRepository;
 
 
 @Service

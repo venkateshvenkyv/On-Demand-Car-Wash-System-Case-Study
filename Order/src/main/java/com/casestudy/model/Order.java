@@ -1,4 +1,4 @@
-package com.ondemandcarwash.models;
+package com.casestudy.model;
 
 import java.util.Date;
 
@@ -85,6 +85,4 @@ public class Order {
 	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	
-	
 }

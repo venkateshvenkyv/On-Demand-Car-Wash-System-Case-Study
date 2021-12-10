@@ -1,8 +1,8 @@
-package com.ondemandcarwash.repository;
+package com.casestudy.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.ondemandcarwash.models.Admin;
+import com.casestudy.models.Admin;
 
 public interface AdminRepository extends MongoRepository<Admin, Integer> {
 

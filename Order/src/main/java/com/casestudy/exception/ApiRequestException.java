@@ -1,4 +1,4 @@
-package com.ondemandcarwash.exception;
+package com.casestudy.exception;
 
 public class ApiRequestException extends RuntimeException{
 	

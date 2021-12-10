@@ -1,4 +1,4 @@
-package com.ondemandcarwash.model;
+package com.casestudy.models;
 
 import java.util.Date;
 
@@ -31,6 +31,7 @@ public class Order {
 		return "Order [orderId=" + orderId + ", carName=" + carName + ", carModel=" + carModel + ", wName=" + wName
 				+ ", washPackId=" + washPackId + ", date=" + date + ", phoneNo=" + phoneNo + "]";
 	}
+	
 	//parameterised constructor
 	public Order(int orderId, String carName, String carModel, String wName, int washPackId, String date, long phoneNo) {
 		super();
@@ -85,4 +86,7 @@ public class Order {
 	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+	
+	
+	
 }
