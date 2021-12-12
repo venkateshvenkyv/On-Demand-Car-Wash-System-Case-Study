@@ -9,7 +9,6 @@ public class Ratings {
 	@Id
 
 	int rating;
-
 	String washerName;
 	String comment;
 

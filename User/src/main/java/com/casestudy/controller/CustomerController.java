@@ -21,6 +21,7 @@ import com.casestudy.exception.ApiRequestException;
 import com.casestudy.model.Customer;
 import com.casestudy.model.Order;
 import com.casestudy.model.PaymentModel;
+import com.casestudy.model.Ratings;
 import com.casestudy.repository.CustomerRepository;
 import com.casestudy.service.CustomerService;
 
@@ -122,25 +123,41 @@ public class CustomerController {
 /*	@PostMapping("/payment")
 	@ApiOperation("for the payment")
 	public String doPayment(@RequestBody PaymentPOJO payment) {
-	return restTemplate.postForObject("http://localhost:8098/payment", payment,String.class);
+	return restTemplate.postForObject("http://localhost:8004/payment", payment,String.class);
 
 	}   */
+	
+	
+	//for adding Ratings
+	@PostMapping("/addratings")
+	@ApiOperation("/Getting all the Orders")
+	public String addratings(@RequestBody Ratings ratings) 
+	{
+	  return restTemplate.postForObject("http://localhost:8000/Admin/addratings", ratings , String.class);
+	  
+	  }
+
 	
 	// Reading All orders
 			@GetMapping("/getallorders")
 			@ApiOperation("Getting all the Orders")
 			public String getAllOrder() {
 			return restTemplate.getForObject("http://localhost:8082/order/allorders", String.class);
-
-
-
+			
 			}
 
-			//Reading all the Ratings
+	//Reading all the Ratings
 			@GetMapping("/ratings")
-			@ApiOperation("Getting all the Ratings")
+			@ApiOperation("/Getting all the Ratings")
 			public String getAllRatings() {
 			return restTemplate.getForObject("http://localhost:8000/Admin/allratings", String.class);
+			}
+			
+	//Reading all the washpacks
+			@GetMapping("/washpack")
+			@ApiOperation("Getting all the washpacks")
+			public String getAllWashpacks() {
+			return restTemplate.getForObject("http://localhost:8000/Admin/allpacks", String.class);
 			}
 
 }
