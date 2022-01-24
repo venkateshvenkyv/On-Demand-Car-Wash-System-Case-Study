@@ -68,18 +68,16 @@ public class AdminController {
 	@PostMapping("/addpack")
 	public String savepack(@RequestBody WashPack pack) {
 		washRepository.save(pack);
-
-		return "washpack Saved Successfully with id:" + pack.getId();
+       return "washpack Saved Successfully with id:" + pack.getId();
 
 	}
 
 	@GetMapping("/allpacks")
 	public List<WashPack> getpack() {
 		return washRepository.findAll();
-
-		// return repo1.findAll();
 	}
 
+	
 	@PostMapping("/addrating")
 	public String saverating(@RequestBody Ratings rating) {
 		

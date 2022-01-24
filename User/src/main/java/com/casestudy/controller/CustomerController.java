@@ -1,12 +1,14 @@
 package com.casestudy.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,20 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.casestudy.exception.ApiRequestException;
+import com.casestudy.model.AuthenticationRequest;
+import com.casestudy.model.AuthenticationResponse;
 import com.casestudy.model.Customer;
 import com.casestudy.model.Order;
 import com.casestudy.model.PaymentModel;
 import com.casestudy.model.Ratings;
 import com.casestudy.repository.CustomerRepository;
 import com.casestudy.service.CustomerService;
+import com.casestudy.util.JwtUtil;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-
-	
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -41,6 +44,46 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+
+
+
+//	@PostMapping("/subs")
+//	private ResponseEntity<?> subscibeCustomer(@RequestBody AuthenticationRequest authenticationRequest) {
+//		String username = authenticationRequest.getUsername();
+//		String password = authenticationRequest.getPassword();
+//		Customer customer = new Customer();
+//		customer.setUsername(username);
+//		customer.setPassword(password);
+//		try {
+//			customerRepository.save(customer);
+//		} catch (Exception e) {
+//			return ResponseEntity.ok(new AuthenticationResponse("Error creating user with username: " + username));
+//		}
+//		return ResponseEntity.ok(new AuthenticationResponse("Created user with username: " + username));
+//	}// For authentication
+//
+//	@PostMapping("/auth")
+//	private ResponseEntity<?> authenticateCustomer(@RequestBody AuthenticationRequest authenticationRequest) {
+//		String username = authenticationRequest.getUsername();
+//		String password = authenticationRequest.getPassword();
+//		try {
+//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//		} catch (Exception e) {
+//			return ResponseEntity.ok(new AuthenticationResponse("No user found with username: " + username));
+//		}
+//		UserDetails loadedUser = customerService.loadUserByUsername(username);
+//		String generatedToken = jwtUtil.generateToken(loadedUser);
+//		return ResponseEntity.ok(new AuthenticationResponse(generatedToken)); // return ResponseEntity.ok(new
+//																				// AuthenticationResponse("Successful
+//		// Authentication for user"+ username));
+//	}
 
 	// Creating/ADDING Customer
 	@PostMapping("/addcustomer")
@@ -101,63 +144,93 @@ public class CustomerController {
 
 	// For Adding Order
 
-	@PostMapping("/addorder") 
-	public String addOrder (@RequestBody Order order) 
-	{
-	  return restTemplate.postForObject("http://localhost:8082/order/addorder", order , String.class);
-	  
-	  }
+	@PostMapping("/addorder")
+	public String addOrder(@RequestBody Order order) {
+		return restTemplate.postForObject("http://localhost:8082/order/addorder", order, String.class);
 
-	
+	}
 
 	// for Deleting Order
 
 	@DeleteMapping("/cancelorder/{id}")
 	@ApiOperation("/Cancel the order by ID")
-	public String deleteorder(@PathVariable("id") int id) 
-	{
-		restTemplate.delete("http://localhost:8082/order/delete/" +id , String.class);
+	public String deleteorder(@PathVariable("id") int id) {
+		restTemplate.delete("http://localhost:8082/order/delete/" + id, String.class);
 		return "Your Order is successfully Canceled " + id;
 	}
 
-/*	@PostMapping("/payment")
-	@ApiOperation("for the payment")
-	public String doPayment(@RequestBody PaymentPOJO payment) {
-	return restTemplate.postForObject("http://localhost:8004/payment", payment,String.class);
+	/*
+	 * @PostMapping("/payment")
+	 * 
+	 * @ApiOperation("for the payment") public String doPayment(@RequestBody
+	 * PaymentPOJO payment) { return
+	 * restTemplate.postForObject("http://localhost:8004/payment",
+	 * payment,String.class);
+	 * 
+	 * }
+	 */
 
-	}   */
-	
-	
-	//for adding Ratings
+	// for adding Ratings
 	@PostMapping("/addratings")
 	@ApiOperation("/Getting all the Orders")
-	public String addratings(@RequestBody Ratings ratings) 
-	{
-	  return restTemplate.postForObject("http://localhost:8000/Admin/addratings", ratings , String.class);
-	  
-	  }
+	public String addratings(@RequestBody Ratings ratings) {
+		return restTemplate.postForObject("http://localhost:8000/Admin/addratings", ratings, String.class);
 
-	
+	}
+
 	// Reading All orders
-			@GetMapping("/getallorders")
-			@ApiOperation("Getting all the Orders")
-			public String getAllOrder() {
-			return restTemplate.getForObject("http://localhost:8082/order/allorders", String.class);
-			
-			}
+	@GetMapping("/getallorders")
+	@ApiOperation("Getting all the Orders")
+	public String getAllOrder() {
+		return restTemplate.getForObject("http://localhost:8082/order/allorders", String.class);
 
-	//Reading all the Ratings
-			@GetMapping("/ratings")
-			@ApiOperation("/Getting all the Ratings")
-			public String getAllRatings() {
-			return restTemplate.getForObject("http://localhost:8000/Admin/allratings", String.class);
-			}
-			
-	//Reading all the washpacks
-			@GetMapping("/washpack")
-			@ApiOperation("Getting all the washpacks")
-			public String getAllWashpacks() {
-			return restTemplate.getForObject("http://localhost:8000/Admin/allpacks", String.class);
-			}
+	}
 
+	// Reading all the Ratings
+	@GetMapping("/ratings")
+	@ApiOperation("/Getting all the Ratings")
+	public String getAllRatings() {
+		return restTemplate.getForObject("http://localhost:8000/Admin/allratings", String.class);
+	}
+
+	// Reading all the washpacks
+	@GetMapping("/washpack")
+	@ApiOperation("Getting all the washpacks")
+	public String getAllWashpacks() {
+		return restTemplate.getForObject("http://localhost:8000/Admin/allpacks", String.class);
+	}
+
+
+	@PostMapping("/subs")
+	private ResponseEntity<?> subscibeCustomer(@RequestBody AuthenticationRequest authenticationRequest) {
+		String username = authenticationRequest.getUsername();
+		String password = authenticationRequest.getPassword();
+		Customer customer = new Customer();
+		customer.setUsername(username);
+		customer.setPassword(password);
+		try {
+			customerRepository.save(customer);
+		} catch (Exception e) {
+			return ResponseEntity.ok(new AuthenticationResponse("Error creating user with username: " + username));
+		}
+		return ResponseEntity.ok(new AuthenticationResponse("Created user with username: " + username));
+	}// For authentication
+
+	@PostMapping("/auth")
+	private ResponseEntity<?> authenticateCustomer(@RequestBody AuthenticationRequest authenticationRequest) {
+		String username = authenticationRequest.getUsername();
+		String password = authenticationRequest.getPassword();
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new AuthenticationResponse("No user found with username: " + username));
+		}
+		UserDetails loadedUser = customerService.loadUserByUsername(username);
+		String generatedToken = jwtUtil.generateToken(loadedUser);
+		return ResponseEntity.ok(new AuthenticationResponse(generatedToken)); // return ResponseEntity.ok(new
+																				// AuthenticationResponse("Successful
+		// Authentication for user"+ username));
+	}
+	
+	
 }

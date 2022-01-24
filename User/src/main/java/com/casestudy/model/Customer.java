@@ -8,60 +8,34 @@ public class Customer {
 	
 	@Id
 	private int cId;
-	private String cName;
-	private String cPhone;
-	private String cEmail;
+	private String username;
+	private String phone;
+	private String email;
 	private String cAddress;
-	private String cPassword;
-	
-	//to String
-	@Override
-	public String toString() {
-		return "Customer [cId=" + cId + ", cName=" + cName + ", cPhone=" + cPhone + ", cEmail=" + cEmail + ", cAddress="
-				+ cAddress + ", cPassword=" + cPassword + "]";
-	}
-	
-	//default constructor or no parameter constructor
-	public Customer() {
-		
-	}
-	
-	//parameterised constructor
-	public Customer(int cId, String cName, String cPhone, String cEmail, String cAddress, String cPassword) {
-		super();
-		this.cId = cId;
-		this.cName = cName;
-		this.cPhone = cPhone;
-		this.cEmail = cEmail;
-		this.cAddress = cAddress;
-		this.cPassword = cPassword;
-	}
-	
-	//getters and setters
-	
+	private String password;
 	public int getcId() {
 		return cId;
 	}
 	public void setcId(int cId) {
 		this.cId = cId;
 	}
-	public String getcName() {
-		return cName;
+	public String getUsername() {
+		return username;
 	}
-	public void setcName(String cName) {
-		this.cName = cName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getcPhone() {
-		return cPhone;
+	public String getPhone() {
+		return phone;
 	}
-	public void setcPhone(String cPhone) {
-		this.cPhone = cPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public String getcEmail() {
-		return cEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void setcEmail(String cEmail) {
-		this.cEmail = cEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getcAddress() {
 		return cAddress;
@@ -69,12 +43,37 @@ public class Customer {
 	public void setcAddress(String cAddress) {
 		this.cAddress = cAddress;
 	}
-	public String getcPassword() {
-		return cPassword;
+	public String getPassword() {
+		return password;
 	}
-	public void setcPassword(String cPassword) {
-		this.cPassword = cPassword;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Customer(int cId, String username, String phone, String email, String cAddress, String password) {
+		super();
+		this.cId = cId;
+		this.username = username;
+		this.phone = phone;
+		this.email = email;
+		this.cAddress = cAddress;
+		this.password = password;
 	}
 	
-
+	public Customer() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "Customer [cId=" + cId + ", username=" + username + ", phone=" + phone + ", email=" + email
+				+ ", cAddress=" + cAddress + ", password=" + password + "]";
+	}
+	
+	
+	
+	
+	
+	
 }
+	 
+	
+	
