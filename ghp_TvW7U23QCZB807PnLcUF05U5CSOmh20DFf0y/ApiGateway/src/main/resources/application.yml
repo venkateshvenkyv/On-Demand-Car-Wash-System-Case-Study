@@ -1,0 +1,22 @@
+server:
+  port: 8002
+spring:  application:    name: API-GATEWAY
+zuul:
+    routes:
+     ADMIN-SERVICE:
+      url: http://localhost:8081
+     ORDER-SERVICE:
+      url: http://localhost:8082
+     CUSTOMER-SERVICE:
+      url: http://localhost:8083
+     WASHER-SERVICE:
+      url: http://localhost:8003
+     PAYMENT-SERVICE:
+      url: http://localhost:8004
+       
+      
+      
+     
+       
+
+     
